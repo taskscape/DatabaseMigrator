@@ -1,0 +1,1 @@
+DatabaseMigrator automatically upgrades the database using supplied version of scripts.txt and configuration files.
