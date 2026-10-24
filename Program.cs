@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Sql;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Windows.Forms;
 
 namespace DatabaseMigrator
 {
@@ -247,13 +244,15 @@ namespace DatabaseMigrator
                 return true;
             }
 
-            if (MessageBox.Show(
+            Console.WriteLine(
                 "Database migration failed." + Environment.NewLine +
-                "Do you want to store expected database migration pointer?" + Environment.NewLine +
+                "Do you want to store expected database migration pointer? (yes/no)" + Environment.NewLine +
                 "Choosing 'Yes' will mark only succeeded scripts as executed." + Environment.NewLine +
-                "Choosing 'No' will not update database migration pointer.",
-                "Database migration",
-                MessageBoxButtons.YesNo) == DialogResult.Yes)
+                "Choosing 'No' will not update database migration pointer.");
+
+            var answer = Console.ReadLine();
+
+            if (answer != null && answer.Trim().Equals("yes", StringComparison.OrdinalIgnoreCase))
             {
                 File.WriteAllText("dbversion.txt", currentVersion.ToString());
             }
